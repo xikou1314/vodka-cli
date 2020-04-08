@@ -8,7 +8,7 @@ var packageConfig = require('../../package.json');
 module.exports = function (done) {
   // Ensure minimum supported node version is used
   if (!semver.satisfies(process.version, packageConfig.engines.node)) {
-    return console.log(chalk.red('  You must upgrade node to >=' + packageConfig.engines.node + '.x to use vue-cli'));
+    return console.log(chalk.red('  You must upgrade node to >=' + packageConfig.engines.node + '.x to use vodka-cli'));
   }
 
   request({

@@ -29,7 +29,7 @@ request({
     console.log('  Available official templates:');
     console.log();
     requestBody.forEach(repo => {
-      if (repo.name.indexOf('vodka-template-') > -1) {
+      if (repo.name.indexOf('vodka-') > -1) {
         let start = repo.name.lastIndexOf('-');
         let name = repo.name.slice(start + 1);
         

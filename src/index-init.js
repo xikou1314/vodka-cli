@@ -65,8 +65,8 @@ const inPlace = !rawName || rawName === '.'; // 若没有第二个参数或者�
 const name = inPlace ? path.relative('../', process.cwd()) : rawName; // 要复制的文件名 可能是当前目录
 const to = path.resolve(rawName || '.'); // 得到要复制的路径
 const clone = program.clone || false; // 是否有clone参数
-fs.ensureDirSync(path.join(home, '.vodka-templates'));
-const tmp = path.join(home, '.vodka-templates', template.replace(/[\/:]/g, '-'));
+fs.ensureDirSync(path.join(home, '.vodka'));
+const tmp = path.join(home, '.vodka', template.replace(/[\/:]/g, '-'));
 if (program.offline) {
   console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`);
   template = tmp;
@@ -118,7 +118,7 @@ function run() {
     checkVersion(() => {
       if (!hasSlash) { // 官方组件库
         // use official templates
-        const officialTemplate = 'xikou1314/' + 'vodka-template-' + template;
+        const officialTemplate = 'xikou1314/' + 'vodka-' + template;
           downloadAndGenerate(officialTemplate);
       } else { // 另外的远程库
         downloadAndGenerate(template);
