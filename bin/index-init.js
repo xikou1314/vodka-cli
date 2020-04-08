@@ -63,8 +63,8 @@ var inPlace = !rawName || rawName === '.'; // 若没有第二个参数或者第�
 var name = inPlace ? path.relative('../', process.cwd()) : rawName; // 要复制的文件名 可能是当前目录
 var to = path.resolve(rawName || '.'); // 得到要复制的路径
 var clone = program.clone || false; // 是否有clone参数
-fs.ensureDirSync(path.join(home, '.vodka'));
-var tmp = path.join(home, '.vodka', template.replace(/[\/:]/g, '-'));
+fs.ensureDirSync(path.join(home, '.whisky'));
+var tmp = path.join(home, '.whisky', template.replace(/[\/:]/g, '-'));
 if (program.offline) {
   console.log('> Use cached template at ' + chalk.yellow(tildify(tmp)));
   template = tmp;
@@ -120,7 +120,7 @@ function run() {
       if (!hasSlash) {
         // 官方组件库
         // use official templates
-        var officialTemplate = 'xikou1314/' + 'vodka-' + template;
+        var officialTemplate = 'xikou1314/' + 'whisky-' + template;
         downloadAndGenerate(officialTemplate);
       } else {
         // 另外的远程库

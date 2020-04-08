@@ -30,7 +30,7 @@ request({
     console.log('  Available official templates:');
     console.log();
     requestBody.forEach(function (repo) {
-      if (repo.name.indexOf('vodka-') > -1) {
+      if (repo.name.indexOf('whisky-') > -1) {
         var start = repo.name.lastIndexOf('-');
         var name = repo.name.slice(start + 1);
 
