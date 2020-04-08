@@ -1,0 +1,56 @@
+{
+  "name": "vodka-cli",
+  "version": "1.0.1",
+  "description": "Auto generate project template",
+  "main": "bin/index.js",
+  "scripts": {
+    "build": "babel src -d bin"
+  },
+  "bin": {
+    "vodka": "bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xikou1314/vodka-cli.git"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "keywords": [
+    "cli"
+  ],
+  "author": "JohnY",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xikou1314/vodka-cli/issues"
+  },
+  "homepage": "https://github.com/xikou1314/vodka-cli#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  },
+  "dependencies": {
+    "async": "^2.6.1",
+    "chalk": "^2.4.1",
+    "commander": "^2.17.1",
+    "consolidate": "^0.15.1",
+    "download-git-repo": "^1.1.0",
+    "fs-extra": "^7.0.0",
+    "handlebars": "^4.0.11",
+    "inquirer": "^6.2.0",
+    "metalsmith": "^2.3.0",
+    "minimatch": "^3.0.4",
+    "mkdirp": "^0.5.1",
+    "multimatch": "^2.1.0",
+    "mz": "^2.7.0",
+    "ncp": "^2.0.0",
+    "ora": "^3.0.0",
+    "read-metadata": "^1.0.0",
+    "request": "^2.88.0",
+    "rmfr": "^2.0.0",
+    "semver": "^5.5.1",
+    "tildify": "^1.2.0",
+    "user-home": "^2.0.0",
+    "validate-npm-package-name": "^3.0.0"
+  }
+}
