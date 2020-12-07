@@ -9,5 +9,9 @@ module.exports = {
     return path.isAbsolute(templatePath)
       ? templatePath
       : path.normalize(path.join(process.cwd(), templatePath));
+  },
+  getPackagePath(packageName) {
+    return path.resolve(__dirname, '../../packages/' + packageName,)
   }
+
 };

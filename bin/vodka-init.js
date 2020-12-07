@@ -56,20 +56,29 @@ help();
  */
 
 var template = program.args[0];
-
-var hasSlash = template.indexOf('/') > -1; // 检查有没有斜杠
-var rawName = program.args[1]; // 拿到init后的第二个参数
-var inPlace = !rawName || rawName === '.'; // 若没有第二个参数或者第二个参数为 . 则在当前目录
-var name = inPlace ? path.relative('../', process.cwd()) : rawName; // 要复制的文件名 可能是当前目录
-var to = path.resolve(rawName || '.'); // 得到要复制的路径
-var clone = program.clone || false; // 是否有clone参数
-fs.ensureDirSync(path.join(home, '.whisky'));
-var tmp = path.join(home, '.whisky', template.replace(/[\/:]/g, '-'));
+// 是否有斜杠 有斜杠的为远程仓库
+var hasSlash = template.indexOf('/') > -1;
+// 文件路径
+var rawName = program.args[1];
+// 当前目录
+var inPlace = !rawName || rawName === '.';
+// 获取要复制到的文件夹名
+var name = inPlace ? path.relative('../', process.cwd()) : rawName;
+// 要复制到的文件夹
+var to = path.resolve(rawName || '.');
+// 是否有clone参数
+var clone = program.clone || false;
+// 确保模板保存的路径存在
+fs.ensureDirSync(path.join(home, '.vodka'));
+// 模板保存的文件夹
+var tmp = path.join(home, '.vodka', template.replace(/[\/:]/g, '-'));
+// 离线
 if (program.offline) {
   console.log('> Use cached template at ' + chalk.yellow(tildify(tmp)));
   template = tmp;
 }
 
+console.log(localPath.getPackagePath(template));
 /**
  * Padding.
  */
@@ -95,18 +104,16 @@ if (inPlace || exists(to)) {
   run();
 }
 
-/**
- * Check, download and generate the project.
- */
-
 function run() {
   // check if template is local
-  if (isLocalPath(template)) {
-    // 判断init后的第一个参数是否是一个本地路径
-    var templatePath = getTemplatePath(template); // 获得本地文件
-    if (exists(templatePath)) {
+
+  // 不包含斜杠的时候从packages目录中拉取文件
+
+  if (!hasSlash) {
+    var packagePath = localPath.getPackagePath(template);
+    if (exists(packagePath)) {
       // 若本地文件存在
-      generate(name, templatePath, to, function (err) {
+      generate(name, packagePath, to, function (err) {
         if (err) logger.fatal(err);
         console.log();
         logger.success('Generated "%s".', name);
@@ -116,17 +123,26 @@ function run() {
     }
   } else {
     // 不是本地文件 拉取远程仓库
-    checkVersion(function () {
-      if (!hasSlash) {
-        // 官方组件库
-        // use official templates
-        var officialTemplate = 'xikou1314/' + 'whisky-' + template;
-        downloadAndGenerate(officialTemplate);
+    // 如果是离线的 则从.vodka中拉取对应的文件
+    if (isLocalPath(template)) {
+      // 获得本地文件路径
+      var templatePath = getTemplatePath(template);
+      // 若本地文件存在
+      if (exists(templatePath)) {
+        generate(name, templatePath, to, function (err) {
+          if (err) logger.fatal(err);
+          console.log();
+          logger.success('Generated "%s".', name);
+        });
       } else {
-        // 另外的远程库
-        downloadAndGenerate(template);
+        logger.fatal('Local template "%s" not found.', template);
       }
-    });
+    } else {
+      // 如果不是离线的 则从远程拉取git中对应的文件
+      checkVersion(function () {
+        downloadAndGenerate(template);
+      });
+    }
   }
 }
 
@@ -141,7 +157,9 @@ function downloadAndGenerate(template) {
   spinner.start();
   // Remove if local template exists
   if (exists(tmp)) rm(tmp);
-  download(template, tmp, { clone: clone }, function (err) {
+  download(template, tmp, {
+    clone: clone
+  }, function (err) {
     spinner.stop();
     if (err) logger.fatal('Failed to download repo ' + template + ': ' + err.message.trim());
     generate(name, tmp, to, function (err) {

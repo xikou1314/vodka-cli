@@ -2,6 +2,6 @@
   "presets": ["env"],
   "ignore": [
     "node_modules",
-    "src/packages"
+    "packages"
   ]
 }

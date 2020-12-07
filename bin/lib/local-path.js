@@ -9,5 +9,8 @@ module.exports = {
   },
   getTemplatePath: function getTemplatePath(templatePath) {
     return path.isAbsolute(templatePath) ? templatePath : path.normalize(path.join(process.cwd(), templatePath));
+  },
+  getPackagePath: function getPackagePath(packageName) {
+    return path.resolve(__dirname, '../../packages/' + packageName);
   }
 };

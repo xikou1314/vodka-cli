@@ -4,6 +4,7 @@ const logger = require('./lib/logger');
 const request = require('request');
 const chalk = require('chalk');
 const fs = require('fs');
+const path = require('path')
 
 /**
  * Padding.
@@ -18,7 +19,7 @@ process.on('exit', () => {
  * List packages.
  */
 
-fs.readdir('./packages', (err, files) => {
+fs.readdir(path.resolve(__dirname, '../packages') , (err, files) => {
   if (err) logger.fatal(err)
   console.log('  Available official templates:');
   console.log();
