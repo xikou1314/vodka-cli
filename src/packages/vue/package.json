@@ -1,0 +1,6 @@
+{
+  "name": "kazma-template-vue",
+  "version": "0.1.1",
+  "license": "MIT",
+  "description": "A full-featured Webpack setup with hot-reload, lint-on-save, unit testing & css extraction."
+}

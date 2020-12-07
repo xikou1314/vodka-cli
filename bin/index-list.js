@@ -4,6 +4,7 @@
 var logger = require('./lib/logger');
 var request = require('request');
 var chalk = require('chalk');
+var fs = require('fs');
 
 /**
  * Padding.
@@ -15,29 +16,14 @@ process.on('exit', function () {
 });
 
 /**
- * List repos.
+ * List packages.
  */
 
-request({
-  url: 'https://api.github.com/users/xikou1314/repos',
-  headers: {
-    'User-Agent': 'vodka-cli'
-  }
-}, function (err, res, body) {
+fs.readdir('./src/packages', function (err, files) {
   if (err) logger.fatal(err);
-  var requestBody = JSON.parse(body);
-  if (Array.isArray(requestBody)) {
-    console.log('  Available official templates:');
-    console.log();
-    requestBody.forEach(function (repo) {
-      if (repo.name.indexOf('whisky-') > -1) {
-        var start = repo.name.lastIndexOf('-');
-        var name = repo.name.slice(start + 1);
-
-        console.log('  ' + chalk.yellow('★') + '  ' + chalk.blue(name) + ' - ' + repo.description);
-      }
-    });
-  } else {
-    console.error(requestBody.message);
-  }
+  console.log('  Available official templates:');
+  console.log();
+  files.forEach(function (fileName) {
+    console.log('  ' + chalk.yellow('★') + '  ' + chalk.blue(fileName));
+  });
 });
