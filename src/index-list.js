@@ -18,7 +18,7 @@ process.on('exit', () => {
  * List packages.
  */
 
-fs.readdir('./src/packages', (err, files) => {
+fs.readdir('./packages', (err, files) => {
   if (err) logger.fatal(err)
   console.log('  Available official templates:');
   console.log();
