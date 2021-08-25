@@ -1,6 +1,6 @@
 {
   "name": "vodka-cli",
-  "version": "1.0.7-alpha.1",
+  "version": "1.0.7",
   "description": "Auto generate project template",
   "main": "bin/index.js",
   "scripts": {
